@@ -1,0 +1,10 @@
+:root {
+	font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu,
+		Cantarell, "Helvetica Neue";
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
