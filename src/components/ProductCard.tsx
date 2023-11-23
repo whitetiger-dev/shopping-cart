@@ -1,15 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Product } from "@/types/product";
+import { Cart, Product } from "@/types";
 import Rating from "./Rating";
-import Quantity from "./Quantity";
 import { formatPrice } from "@/lib/helpers";
 import { Button } from "./ui/button";
+import { useOutletContext } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
+  const [, addToCart, updateCart, cartHasProduct] = useOutletContext<Cart>();
+
   return (
     <Card className="shadow">
       <CardContent className="h-full p-3">
@@ -26,7 +28,16 @@ function ProductCard({ product }: ProductCardProps) {
             <Rating rating={product.rating.rate} count={product.rating.count} />
             <p className="font-bold ml-1">$ {formatPrice(product.price)}</p>
             <div>
-              <Button className="w-full">Add to cart</Button>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  cartHasProduct(product.id)
+                    ? addToCart(product.id, 1)
+                    : updateCart(product.id, 1)
+                }
+              >
+                Add to cart
+              </Button>
             </div>
           </div>
         </div>
