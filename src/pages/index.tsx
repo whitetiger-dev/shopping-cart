@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { CartItem } from "@/types";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -37,9 +38,16 @@ function App() {
     setCartItems(updatedItems.filter((item) => item.quantity > 0));
   };
 
+  const cartHasProduct = (product_id: number) => {
+    for (let i = 0, n = cartItems.length; i < n; i++) {
+      if (cartItems[i].product_id === product_id) return true;
+    }
+    return false;
+  };
   return (
     <div>
-      <Outlet context={[cartItems, addToCart, updateCart]} />
+      <Header cart={[cartItems, addToCart, updateCart, cartHasProduct]} />
+      <Outlet context={[cartItems, addToCart, updateCart, cartHasProduct]} />
     </div>
   );
 }

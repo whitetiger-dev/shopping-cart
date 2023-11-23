@@ -6,7 +6,7 @@ interface QuantityProps {
   /** The current quantity of the proudct */
   quantity: number;
   /** Callback function when quantity changes by a certain value */
-  handeQtyChange: (value: string) => void;
+  handeQtyChange: (value: number) => void;
   /** Callback function when quantity increase by 1 */
   handleQtyIncrement: () => void;
   /** Callback function when quantity decrease by 1 */
