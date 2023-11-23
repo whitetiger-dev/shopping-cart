@@ -20,19 +20,31 @@ function Quantity({
 	handleQtyDecrement,
 }: QuantityProps) {
 	return (
-		<div>
-			<Button onClick={handleQtyDecrement} disabled={quantity < 1}>
+		<div className="flex">
+			<Button
+				onClick={handleQtyDecrement}
+				disabled={quantity < 1}
+				className="p-1 h-7"
+				variant="ghost"
+			>
 				<Minus />
 			</Button>
-			<Input
+			<input
 				type="number"
 				min={0}
 				onChange={(event) => handeQtyChange(event.target.value)}
 				value={quantity}
+				className="p-0 w-full border focus:outline-none text-center"
 			/>
-			<Button onClick={handleQtyIncrement}>
+			<Button
+				onClick={handleQtyIncrement}
+				className="p-1 h-7"
+				variant="ghost"
+			>
 				<Plus />
 			</Button>
 		</div>
 	);
 }
+
+export default Quantity;
