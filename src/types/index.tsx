@@ -1,28 +1,29 @@
-type Rating = {
-  rate: number;
-  count: number;
+type TRating = {
+	rate: number;
+	count: number;
 };
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-  description: string;
-  rating: Rating;
-  image: string;
+interface IProduct {
+	id: number;
+	title: string;
+	price: number;
+	category: string;
+	description: string;
+	rating: TRating;
+	image: string;
 }
 
-interface CartItem {
-  product_id: number;
-  quantity: number;
+interface ICartItem extends IProduct {
+	quantity: number;
 }
 
-type Cart = [
-  cartItems: CartItem[],
-  addToCart: (product_id: number, quantity: number) => void,
-  updateCart: (product_id: number, quantity: number) => void,
-  cartHasProduct: (product_id: number) => boolean
-];
+interface ICart {
+	cartItems: ICartItem[];
+	addToCart: (item: IProduct) => void;
+	updateCart: (product_id: number, quantity: number) => void;
+	removeFromCart: (product_id: number) => void;
+	clearCart: () => void;
+	calcCartTotal: () => number;
+}
 
-export type { Product, CartItem, Cart };
+export type { IProduct, ICart, ICartItem, TRating };

@@ -5,7 +5,14 @@ interface CartProviderProps extends React.PropsWithChildren {
 	children: React.JSX.Element;
 }
 
-export const CartContext = createContext<ICart | null>(null);
+export const CartContext = createContext<ICart>({
+	cartItems: [],
+	addToCart: () => {},
+	updateCart: () => {},
+	removeFromCart: () => {},
+	clearCart: () => {},
+	calcCartTotal: () => 0,
+});
 
 export function CartProvider({ children }: CartProviderProps) {
 	const [cartItems, setCartItems] = useState<ICartItem[]>([]);
@@ -31,13 +38,17 @@ export function CartProvider({ children }: CartProviderProps) {
 	};
 
 	const updateCart = (product_id: number, quantity: number) => {
-		const newCartItems = [...cartItems];
-		const index = newCartItems.findIndex(
-			(cartItem) => cartItem.id === product_id
-		);
-		if (index !== -1)
-			newCartItems[index] = { ...newCartItems[index], quantity };
-		setCartItems(newCartItems);
+		if (quantity === 0) {
+			removeFromCart(product_id);
+		} else {
+			const newCartItems = [...cartItems];
+			const index = newCartItems.findIndex(
+				(cartItem) => cartItem.id === product_id
+			);
+			if (index !== -1)
+				newCartItems[index] = { ...newCartItems[index], quantity };
+			setCartItems(newCartItems);
+		}
 	};
 
 	const removeFromCart = (product_id: number) => {
