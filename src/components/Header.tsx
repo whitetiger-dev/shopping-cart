@@ -7,12 +7,13 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { ShoppingBag } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Quantity from "./Quantity";
 import { formatPrice } from "@/lib/helpers";
+import { Button } from "./ui/button";
 
 interface HeaderProps {
 	cart: ICart;
@@ -59,8 +60,8 @@ function Header({
 						<SheetTrigger>
 							<ShoppingBag size={24} />
 						</SheetTrigger>
-						<SheetContent>
-							<SheetHeader>
+						<SheetContent className="py-6 px-0 grid grid-rows-[auto_1fr_auto] focus:outline-none">
+							<SheetHeader className="px-4">
 								<SheetTitle>Shopping Cart</SheetTitle>
 								<SheetDescription>
 									{(cartItems.length === 0 &&
@@ -68,62 +69,64 @@ function Header({
 										`You have ${cartItems.length} products in your cart.`}
 								</SheetDescription>
 							</SheetHeader>
-							<div className="flex flex-col mt-4">
-								{cartItems.map((cartItem, index) => (
-									<div
-										key={cartItem.id}
-										className={`flex flex-nowrap gap-4 border-t ${
-											index + 1 === cartItems.length
-												? "border-y"
-												: ""
-										} py-4 h-[7.5rem]`}
-									>
-										<img
-											src={cartItem.image}
-											alt={cartItem.title}
-											className="h-full w-14 object-contain"
-										/>
-										<div className="flex flex-col gap-2 justify-between flex-grow">
-											<p className="text-sm line-clamp-2">
-												{cartItem.title}
-											</p>
-											<div className="flex justify-between items-center">
-												<Quantity
-													quantity={cartItem.quantity}
-													handeQtyChange={(
-														value: number
-													) =>
-														updateCart(
-															cartItem.id,
-															value
-														)
-													}
-													handleQtyIncrement={() =>
-														updateCart(
-															cartItem.id,
-															cartItem.quantity +
-																1
-														)
-													}
-													handleQtyDecrement={() =>
-														updateCart(
-															cartItem.id,
-															cartItem.quantity -
-																1
-														)
-													}
-												/>
-												<p className="font-semibold ml-auto">
-													$&nbsp;
-													{formatPrice(
-														cartItem.price *
-															cartItem.quantity
-													)}
+							<ScrollArea className="px-4 relative h-full">
+								<div className="flex flex-col">
+									{cartItems.map((cartItem, index) => (
+										<div
+											key={cartItem.id}
+											className={`flex flex-nowrap gap-4 border-t ${
+												index + 1 === cartItems.length
+													? "border-y"
+													: ""
+											} py-4 h-[7.5rem]`}
+										>
+											<img
+												src={cartItem.image}
+												alt={cartItem.title}
+												className="h-full w-14 object-contain"
+											/>
+											<div className="flex flex-col gap-2 justify-between flex-grow">
+												<p className="text-sm line-clamp-2">
+													{cartItem.title}
 												</p>
+												<div className="flex justify-between items-center">
+													<Quantity
+														quantity={
+															cartItem.quantity
+														}
+														handleQuantityUpdate={(
+															quantity: number
+														) =>
+															updateCart(
+																cartItem.id,
+																quantity
+															)
+														}
+													/>
+													<p className="font-semibold ml-auto">
+														$&nbsp;
+														{formatPrice(
+															cartItem.price *
+																cartItem.quantity
+														)}
+													</p>
+												</div>
 											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
+
+								<ScrollBar />
+							</ScrollArea>
+							<div className="mx-6 h-20 flex flex-col justify-center items-center p-4 bg-secondary rounded-lg">
+								<p className="flex justify-between w-full font-semibold">
+									<span>Total</span>
+									<span>
+										$&nbsp;
+										{formatPrice(calcCartTotal())}
+									</span>
+								</p>
+								<Button className="w-full">Checkout</Button>
 							</div>
 						</SheetContent>
 					</Sheet>

@@ -11,24 +11,28 @@ interface QuantityProps {
 
 function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
 	const [qty, setQty] = useState<number>(0);
-	const [qtyUpdated, setQtyUpdated] = useState<boolean>(true);
 
 	useEffect(() => {
 		setQty(quantity);
 	}, [quantity]);
 
-	const handleQtyIncrement = () => setQty((prevQty) => prevQty + 1);
-	const handleQtyDecrement = () => setQty((prevQty) => prevQty - 1);
-
-	const handleQtyUpdate = () => {
-		handleQuantityUpdate(qty);
-		setQtyUpdated(true);
-	};
+	const handleQtyIncrement = () => handleQuantityUpdate(quantity + 1);
+	const handleQtyDecrement = () => handleQuantityUpdate(quantity - 1);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.validity.valid) {
-			setQty(parseInt(event.target.value));
-			setQtyUpdated(false);
+			const num = parseInt(event.target.value);
+			setQty(num);
+			if (!Number.isNaN(num)) {
+				handleQuantityUpdate(num);
+			}
+		}
+	};
+
+	const handleInputBlur = () => {
+		if (Number.isNaN(qty)) {
+			setQty(quantity);
+			handleQuantityUpdate(quantity);
 		}
 	};
 
@@ -39,7 +43,7 @@ function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
 					onClick={handleQtyDecrement}
 					disabled={quantity < 1}
 					className="p-1 h-7"
-					variant={"secondary"}
+					variant="secondary"
 				>
 					{(quantity !== 1 && <Minus />) || <Trash2 />}
 				</Button>
@@ -47,6 +51,7 @@ function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
 					type="number"
 					min={0}
 					onChange={handleInputChange}
+					onBlur={handleInputBlur}
 					value={qty}
 					className="p-0 w-full border focus:outline-none text-center [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
 				/>
@@ -58,9 +63,6 @@ function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
 					<Plus />
 				</Button>
 			</div>
-			{qtyUpdated && (
-				<Button onClick={handleQtyUpdate}>Update cart</Button>
-			)}
 		</div>
 	);
 }
