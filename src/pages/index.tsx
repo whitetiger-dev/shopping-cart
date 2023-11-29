@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 function App() {
 	const cart = useContext<ICart>(CartContext);
 	return (
-		<div>
+		<div className="h-full">
 			<Header cart={cart} />
 			<Outlet context={{ cart }} />
 		</div>
