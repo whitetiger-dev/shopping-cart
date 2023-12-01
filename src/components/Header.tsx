@@ -20,14 +20,7 @@ interface HeaderProps {
 }
 
 function Header({
-	cart: {
-		cartItems,
-		addToCart,
-		updateCart,
-		removeFromCart,
-		clearCart,
-		calcCartTotal,
-	},
+	cart: { cartItems, updateCart, calcCartTotal },
 }: HeaderProps) {
 	const navLinkClassName = ({ isActive }: { isActive: boolean }) => {
 		const classNames = [
