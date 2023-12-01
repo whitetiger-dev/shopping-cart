@@ -44,7 +44,7 @@ function Header({
 
 	return (
 		<>
-			<header className="flex flex-nowrap justify-between border items-center px-4 bg-white text-blue-950">
+			<header className="flex flex-nowrap justify-between border items-center px-4 bg-white text-blue-950 z-10">
 				<h1 className="text-xl md:text-2xl font-extrabold py-2">
 					COOL PIECES
 				</h1>
@@ -52,13 +52,13 @@ function Header({
 					<NavLink to="/" className={navLinkClassName}>
 						Home
 					</NavLink>
-					<NavLink to="shop" className={navLinkClassName}>
+					<NavLink to="/shop" className={navLinkClassName}>
 						Shop
 					</NavLink>
 
 					<Sheet>
 						<SheetTrigger>
-							<ShoppingBag size={24} />
+							<ShoppingBag className="open-cart-btn" size={24} />
 						</SheetTrigger>
 						<SheetContent className="py-6 px-0 grid grid-rows-[auto_1fr_auto] focus:outline-none">
 							<SheetHeader className="px-4">

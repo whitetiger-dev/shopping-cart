@@ -4,7 +4,7 @@ function Home() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="fixed top-0 px-4 sm:px-10 md:px-40 lg:px-80 h-full flex items-center justify-center">
+		<div className="fixed -z-10 top-0 px-4 sm:px-10 md:px-40 lg:px-80 h-full flex items-center justify-center">
 			<div className="bg-white p-6 rounded-lg flex flex-col gap-6 items-center justify-center">
 				<h1 className="text-2xl font-bold">Welcome to Cool Pieces</h1>
 				<p className="text-center">

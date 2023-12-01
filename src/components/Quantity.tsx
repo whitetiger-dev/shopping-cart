@@ -10,10 +10,10 @@ interface QuantityProps {
 }
 
 function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
-	const [qty, setQty] = useState<number>(0);
+	const [qty, setQty] = useState<string>("0");
 
 	useEffect(() => {
-		setQty(quantity);
+		setQty(quantity.toString());
 	}, [quantity]);
 
 	const handleQtyIncrement = () => handleQuantityUpdate(quantity + 1);
@@ -21,17 +21,22 @@ function Quantity({ quantity, handleQuantityUpdate }: QuantityProps) {
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.validity.valid) {
-			const num = parseInt(event.target.value);
-			setQty(num);
-			if (!Number.isNaN(num)) {
+			const value = event.target.value;
+			const num = parseInt(value);
+
+			if (!Number.isNaN(parseInt(value))) {
 				handleQuantityUpdate(num);
+			} else if (value === "") {
+				setQty("");
+			} else {
+				setQty((prev) => prev);
 			}
 		}
 	};
 
 	const handleInputBlur = () => {
-		if (Number.isNaN(qty)) {
-			setQty(quantity);
+		if (Number.isNaN(parseInt(qty))) {
+			setQty(quantity.toString());
 			handleQuantityUpdate(quantity);
 		}
 	};

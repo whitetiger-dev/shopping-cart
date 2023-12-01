@@ -93,7 +93,7 @@ function Rating({ rating, count }: RatingProps) {
 	}, []);
 
 	return (
-		<div className="flex flex-nowrap items-center">
+		<div className="flex flex-nowrap items-center rating">
 			<span className="flex flex-nowrap items-center h-6">{stars}</span>
 			<span className="ml-1">({count})</span>
 		</div>
